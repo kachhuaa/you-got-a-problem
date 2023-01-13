@@ -1,10 +1,20 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.join(__dirname, 'client/src/index.js'),
+  entry: {
+    index: path.join(__dirname, 'client/src/index.js'),
+  },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'client/build'),
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'client/build/js'),
+    clean: true,
+  },
+  // devServer: {
+  //   static: path.resolve(__dirname, 'client/build/js'),
+  // },
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM",
   },
   module: {
     rules: [
@@ -14,7 +24,7 @@ module.exports = {
         use: {
             loader: 'babel-loader',
             options: {
-                presets: ['@babel/preset-env', '@babel/preset-react']
+                presets: ['@babel/preset-env', ['@babel/preset-react', { 'runtime': 'automatic' }]]
             }
         },
       },
@@ -38,4 +48,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
+  optimization: {
+    runtimeChunk: 'single',
+  }
 };
