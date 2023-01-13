@@ -1,7 +1,7 @@
 function Emoji(props) {
     const emojiStyle = {
         fontSize: "30vh",
-        margin: "5vh 0 0 0",
+        margin: "6vh 0 0 0",
         textAlign: "center"
     }
 

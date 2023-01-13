@@ -38,9 +38,9 @@ const contentAlignment = {
     flex: "1 1 auto",
     // height: "auto",
     width: "100%",
-    flexGrow: "1",
     // padding: "2rem",
     flexFlow: "column nowrap",
+    margin: "5vh auto 0",
 };
 
 function AppWindow(props) {
@@ -52,7 +52,7 @@ function AppWindow(props) {
             </div>
             <div style={dummyNavbarAlignment} />
             <div style={contentAlignment}>
-                {/* <Content /> */}
+                <Content />
             </div>
         </div>
     );
