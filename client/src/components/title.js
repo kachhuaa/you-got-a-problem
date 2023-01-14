@@ -32,6 +32,8 @@ function Title(props) {
         titleStyle.fontSize = props.fontSize;
     if (props.lineHeight)
         titleStyle.lineHeight = props.lineHeight;
+    if (props.textAlign)
+        titleStyle.textAlign = props.textAlign;
 
     let currentTitle;
     if (props.type === "big")

@@ -12,8 +12,8 @@ const dropDownLinkStyle = {
     alignItems: "stretch",
     borderLeftWidth: "0.25vh",
     borderLeftStyle: "solid",
-    borderTopWidth: "0.25vh",
-    borderTopStyle: "solid",
+    // borderTopWidth: "0.25vh",
+    // borderTopStyle: "solid",
     borderRightWidth: "0.25vh",
     borderRightStyle: "solid",
 };
@@ -28,10 +28,13 @@ const dropDownContent = {
     height: "10vh",
     width: "40vh",
     backgroundColor: "#ffecef",
-    borderLeft: "0.25vh solid #251b37",
-    borderRight: "0.25vh solid #251b37",
-    borderBottom: "0.25vh solid #251b37",
-    borderRadius: "0 0 0.25vh 0.25vh",
+    // borderLeft: "0.25vh solid #251b37",
+    // borderRight: "0.25vh solid #251b37",
+    // borderBottom: "0.25vh solid #251b37",
+    borderLeft: "0.25vh solid #533e6d",
+    borderRight: "0.25vh solid #533e6d",
+    borderBottom: "0.25vh solid #533e6d",
+    borderRadius: "0 0 0.5vh 0.5vh",
 };
 
 const sliderStyle = {

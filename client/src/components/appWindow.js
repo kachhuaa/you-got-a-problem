@@ -26,14 +26,12 @@ const dummyNavbarAlignment = {
 };
 
 const navbarAlignment = {
-    alignSelf: "center",
     flex: "0 0 auto",
     // height: "auto",
     width: "100%",
 };
 
 const contentAlignment = {
-    alignSelf: "center",
     display: "flex",
     flex: "1 1 auto",
     // height: "auto",

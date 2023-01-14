@@ -1,29 +1,43 @@
+import ComputerScreen from './computerScreen'
 import Title from './title'
-import StatWindow from './statWindow'
-import Emoji from './emoji'
 
-import MediaQuery from 'react-responsive'
+// import MediaQuery from 'react-responsive'
 
 const contentStyle = {
     alignItems: "center",
     display: "flex",
-    flexFlow: "row nowrap",
-    height: "calc(100% - 11vh)",
-    justifyContent: "space-between",
+    flex: "1 1 auto",
+    // height: "calc(100% - 11vh)",
+    flexFlow: "row wrap",
+    justifyContent: "flex-start",
     // gap: "3rem",
-    gap: "5vh",
-    margin: "3.5vh",
+    margin: "3.5vh 7.5vh 3.5vh 7.5vh",
+};
+
+const titleAlignment = {
+    display: "flex",
+    flex: "0 0 auto",
+    width: "70vh",
+    marginTop: "10vh",
 };
 
 function Content(props) {
-    const contentStyleMobile = contentStyle;
+    const contentStyleMobile = structuredClone(contentStyle);
     contentStyleMobile.flexFlow = "column nowrap";
+
+    // return (
+    //     <div style={ { display: "flex", flex: "1 1 auto", flexFlow: "column nowrap", justifyContent: "space-between", alignItems: "center" } }>
+    //         <Title type="big" textAlign="center" fontSize="11.5vh" lineHeight="17vh" />
+    //         <Emoji fontSize="30vh" />
+    //     </div>
+    // );
+
     return (
         <div style={contentStyle}>
-            <div style={ { display: "flex", flex: "1 1 auto", flexFlow: "column nowrap", justifyContent: "space-between", alignItems: "center" } }>
-                <Title type="big" fontSize="11.5vh" lineHeight="17vh" />
-                <Emoji fontSize="30vh" />
+            <div style={ titleAlignment }>
+                <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
             </div>
+            <ComputerScreen />
         </div>
     );
     // return (

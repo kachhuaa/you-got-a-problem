@@ -1,5 +1,9 @@
+/*****************************************************/
+/* DOCUMENT-WIDE STYLES */
+/*****************************************************/
+
 html, body {
-    height: auto;
+    height: 100%;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -18,6 +22,11 @@ h1 {
     width: 100%;
 }
 
+
+/*****************************************************/
+/* NAVLINK */
+/*****************************************************/
+
 .navLink:hover {
     background-color: #ffecef;
     color: #251b37;
@@ -27,6 +36,11 @@ h1 {
     background-color: #533e6d;
     color: #ffffff;
 }
+
+
+/*****************************************************/
+/* DROPDOWN */
+/*****************************************************/
 
 .dropDownContent {
     display: none;
@@ -39,16 +53,30 @@ h1 {
 .dropDown .dropDownLink {
     border-left-color: transparent;
     border-right-color: transparent;
-    border-top-color: transparent;
+    /* border-top-color: transparent; */
 }
 
 .dropDown:hover .dropDownLink {
-    border-left-color: #251b37;
+    /* border-left-color: #251b37;
     border-right-color: #251b37;
-    border-top-color: #251b37;
+    border-top-color: #251b37; */
+    border-left-color: #533e6d;
+    border-right-color: #533e6d;
+    /* border-top-color: #533e6d; */
 }
 
 .dropDown:hover .navLink {
     background-color: #ffecef;
     color: #251b37;
 }
+
+
+/*****************************************************/
+/* HOME PAGE ANIMATION */
+/*****************************************************/
+
+/* @keyframes moveTitleLeft {
+    0% {
+
+    }
+} */

@@ -25,10 +25,10 @@ const navLinkAlignment = {
 function Navbar(props) {
     return (
         <div style={navbarStyle}>
-            <div style={ { marginLeft: "3.5vh"/*, marginRight: "50vh"*/, display: "flex", alignItems: "center" } }>
+            <div style={ { marginLeft: "7.5vh"/*, marginRight: "50vh"*/, display: "flex", alignItems: "center" } }>
                 <Logo fontSize="5vh" />
             </div>
-            <div style={ { display: "flex", flexFlow: "row nowrap", justifyContent: "flex-end", alignItems: "stretch", /*flex: "1 1 auto"*/ } }>
+            <div style={ { display: "flex", /*marginRight: "7.5vh", */flexFlow: "row nowrap", justifyContent: "flex-end", alignItems: "stretch", /*flex: "1 1 auto"*/ } }>
                 <div style={navLinkAlignment}>
                     <NavLink label="Saved Problems" />
                 </div>
@@ -36,7 +36,6 @@ function Navbar(props) {
                     <NavLink label="Last Unsolved" />
                 </div>
                 <div style={navLinkAlignment}>
-                    {/* <NavLink label="Choose Difficulty" /> */}
                     <DropDown />
                 </div>
             </div>
