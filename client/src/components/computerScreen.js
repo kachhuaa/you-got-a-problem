@@ -8,7 +8,7 @@ const computerScreenStyle = {
     flex: "1 1 auto",
     flexFlow: "column nowrap",
     alignItems: "stretch",
-    margin: "14vh 0 0 0",
+    margin: "11vh 0 0 0",
 };
 
 const computerTitleBarStyle = {

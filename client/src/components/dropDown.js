@@ -24,8 +24,8 @@ const dropDownContent = {
     // alignItems: "stretch"
     position: "absolute",
     top: "7vh",
-    right: "0",
-    height: "10vh",
+    right: "7.5vh",
+    height: "8vh",
     width: "40vh",
     backgroundColor: "#ffecef",
     // borderLeft: "0.25vh solid #251b37",

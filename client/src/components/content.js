@@ -1,24 +1,25 @@
 import ComputerScreen from './computerScreen'
 import Title from './title'
+import Problemset from './problemset'
 
 // import MediaQuery from 'react-responsive'
 
 const contentStyle = {
-    alignItems: "center",
+    alignItems: "flex-start",
     display: "flex",
     flex: "1 1 auto",
     // height: "calc(100% - 11vh)",
     flexFlow: "row wrap",
     justifyContent: "flex-start",
     // gap: "3rem",
-    margin: "3.5vh 7.5vh 3.5vh 7.5vh",
+    margin: "0 7.5vh",
 };
 
 const titleAlignment = {
     display: "flex",
     flex: "0 0 auto",
     width: "70vh",
-    marginTop: "10vh",
+    marginTop: "13.5vh",
 };
 
 function Content(props) {
@@ -37,7 +38,8 @@ function Content(props) {
             <div style={ titleAlignment }>
                 <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
             </div>
-            <ComputerScreen />
+            {/* <ComputerScreen /> */}
+            <Problemset />
         </div>
     );
     // return (

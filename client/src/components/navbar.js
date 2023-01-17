@@ -28,7 +28,7 @@ function Navbar(props) {
             <div style={ { marginLeft: "7.5vh"/*, marginRight: "50vh"*/, display: "flex", alignItems: "center" } }>
                 <Logo fontSize="5vh" />
             </div>
-            <div style={ { display: "flex", /*marginRight: "7.5vh", */flexFlow: "row nowrap", justifyContent: "flex-end", alignItems: "stretch", /*flex: "1 1 auto"*/ } }>
+            <div style={ { display: "flex", marginRight: "7.5vh", flexFlow: "row nowrap", justifyContent: "flex-end", alignItems: "stretch", /*flex: "1 1 auto"*/ } }>
                 <div style={navLinkAlignment}>
                     <NavLink label="Saved Problems" />
                 </div>
