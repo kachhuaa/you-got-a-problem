@@ -25,7 +25,7 @@ async function getProblems(problemRating, userHandle) {
     
     wait(3);
 
-    const userSubmissions = (await (await fetch("https://codeforces.com/api/user.status?handle=kachhuaa")).json()).result;
+    const userSubmissions = (await (await fetch("https://codeforces.com/api/user.status?handle=" + userHandle)).json()).result;
     const solvedProblems = new Set();
     const attemptedProblems = new Set();
 

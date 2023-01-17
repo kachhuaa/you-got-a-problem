@@ -39,7 +39,7 @@ function Content(props) {
                 <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
             </div>
             {/* <ComputerScreen /> */}
-            <Problemset />
+            <Problemset problemSetDifficulty={ props.problemSetDifficulty } problemSetDesc={ props.problemSetDesc }/>
         </div>
     );
     // return (

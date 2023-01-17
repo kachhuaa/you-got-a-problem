@@ -36,7 +36,9 @@ const loginInputStyle = {
 const loginTextInputStyle = { 
     width: "100%", 
     aspectRatio: "12 / 1",
-    fontSize: "2vh",
+    fontSize: "2.2vh",
+    fontFamily: "JetBrains Mono, monospace",
+    fontWeight: "400",
 };
 
 const loginButtonStyle = {

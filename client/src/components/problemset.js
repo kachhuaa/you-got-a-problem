@@ -39,9 +39,8 @@ const tableStyle = {
     flexFlow: "column nowrap",
     alignItems: "stretch",
     justifyContent: "flex-start",
-    border: "3px solid #251b37",
-    // borderRight: "2px solid #251b37",
-    // borderBottom: "2px solid #251b37",
+    border: "0.5vh solid #251b37",
+    cursor: "pointer",
 };
 
 const headingRowStyle = {
@@ -54,10 +53,7 @@ const headingRowStyle = {
     textAlign: "center", 
     fontSize: "2.5vh",
     padding: "1vh 0",
-    // border: "1px solid #b7b7b7",
-    // borderLeft: "2px solid #b7b7b7",
-    borderBottom: "2px solid #251b37",
-    // borderTop: "2px solid #b7b7b7",
+    borderBottom: "0.3vh solid #251b37",
 };
 
 const headingIdStyle = {
@@ -88,12 +84,17 @@ const dataRowStyle = {
     textAlign: "center", 
     fontWeight: "400", 
     fontSize: "2vh",
+    borderRight: "0.3vh solid #251b37",
+    borderBottom: "0.3vh solid #251b37",
+};
+
+const dataLinkStyle = {
+    display: "flex",
+    flex: "1 1 auto",
+    flexFlow: "row nowrap",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
     padding: "1vh 0",
-    // border: "1px solid #b7b7b7",
-    // borderLeft: "2px solid #b7b7b7",
-    borderRight: "2px solid #251b37",
-    borderBottom: "2px solid #251b37",
-    // borderBottom: "2px solid #b7b7b7",
 };
 
 const dataIdStyle = {
@@ -121,24 +122,54 @@ const dataNameStyle = {
 class Problemset extends React.Component {
     constructor(props) {
         super(props);
-        
-        this.state = {
-            problems: [],
-        };
-
-        for (let i = 0; i < 50; ++i) {
-            this.state.problems.push({
-                id: "###",
-                // name: ['A Lonely Light', 'Alice and Bob', 'Too Easy for U', 'Traveling Salesperson'][rand(0, 3)],
-                // solvedStatus: ['accepted', 'failed', 'unattempted'][rand(0, 2)]
-                probName: 'LOADING...',
-                solvedStatus: 'unattempted',
-            });
-        }
     }
 
-    async componentDidMount() {
-        this.setState({ problems: await getProblems(1800) });
+    getRowStyle(problemSolvedStatus, isLastRow, isPlaceholder) {
+        const curRowStyle = structuredClone(dataRowStyle);
+        if (problemSolvedStatus == 'accepted')
+            curRowStyle.backgroundColor = '#b8ffb8';
+        else if (problemSolvedStatus == 'failed')
+            curRowStyle.backgroundColor = '#fdb4b4';
+        else
+            curRowStyle.backgroundColor = 'transparent';
+        
+        if (isLastRow)
+            curRowStyle.borderBottom = "0 none #251b37";
+        
+        if (isPlaceholder)
+            curRowStyle.padding = "1vh 0";
+
+        return curRowStyle;
+    }
+
+    getTableRows() {
+        return this.props.problemSetDesc.map((elem, idx, array) => {
+            const curRowStyle = this.getRowStyle(elem.solvedStatus, idx === array.length - 1, elem.id === "###");
+            
+            const problemLink = "https://www.codeforces.com/problemset/problem/" + elem.id.substring(0, elem.id.length - 1) + "/" + elem.id[elem.id.length - 1];
+
+            if (elem.id === "###") {
+                return (
+                    <tr className="tableRow" style={ curRowStyle }>
+                        <td style={ dataIdStyle }>{ elem.id }</td>
+                        <td style={ dataNameStyle }>{ elem.probName }</td>
+                    </tr>
+                );
+            }
+
+            return (
+                <tr className="tableRow" style={ curRowStyle }>
+                    <a style={ dataLinkStyle } href={problemLink} target="_blank" rel="noopener noreferrer">
+                        <td style={ dataIdStyle }>{elem.id}</td>
+                        <td style={ dataNameStyle }>{elem.probName}</td>
+                    </a>
+                </tr>
+            );
+        });
+    }
+
+    getSolvedCount() {
+        return this.props.problemSetDesc.reduce((count, problem) => problem.solvedStatus === "accepted" ? ++count : count, 0);
     }
 
     render() {
@@ -149,47 +180,25 @@ class Problemset extends React.Component {
                         Difficulty&nbsp;
                     </span>
                     <span style={ { color: "#7f0068" } }>
-                        1800
+                        { this.props.problemSetDifficulty }
                     </span>
                     <span style={ { color: "#251b37" } }>
                         &nbsp;- Solved&nbsp;
                     </span>
                     <span style={ { color: "#7f0068" } }>
-                        75
+                        { this.getSolvedCount() }
                     </span>
                     <span style={ { color: "#251b37" } }>
                         &nbsp;of 100
                     </span>
                 </div>
-                    <table style={tableStyle}>
-                        <tr style={ headingRowStyle }>
-                            <th style={ headingIdStyle }>#</th>
-                            <th style={ headingNameStyle }>Name</th>
-                        </tr>
-                        <div style={contentAlignment}>
-                            {
-                                this.state.problems.map((elem, idx, array) => {
-                                    const curRowStyle = structuredClone(dataRowStyle);
-                                    if (elem.solvedStatus == 'accepted')
-                                        curRowStyle.backgroundColor = '#b8ffb8';
-                                    else if (elem.solvedStatus == 'failed')
-                                        curRowStyle.backgroundColor = '#fdb4b4';
-                                    else
-                                        curRowStyle.backgroundColor = 'transparent';
-                                    
-                                    if (idx == array.length - 1)
-                                        curRowStyle.borderBottom = "0 none #251b37";
-
-                                    return (
-                                        <tr style={ curRowStyle }>
-                                            <td style={ dataIdStyle }>{elem.id}</td>
-                                            <td style={ dataNameStyle }>{elem.probName}</td>
-                                        </tr>
-                                    );
-                                })
-                            }
-                        </div>
-                    </table>
+                <table style={ tableStyle }>
+                    <tr style={ headingRowStyle }>
+                        <th style={ headingIdStyle }>#</th>
+                        <th style={ headingNameStyle }>Name</th>
+                    </tr>
+                    <div style={ contentAlignment }>{ this.getTableRows() }</div>
+                </table>
             </div>
         );
     }

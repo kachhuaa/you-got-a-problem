@@ -17,6 +17,11 @@ h1 {
     margin: 0;
 }
 
+a, a:hover, a:focus a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 #root {
     height: 100%;
     width: 100%;
@@ -68,6 +73,15 @@ h1 {
 .dropDown:hover .navLink {
     background-color: #ffecef;
     color: #251b37;
+}
+
+
+/*****************************************************/
+/* TABLE ROWS */
+/*****************************************************/
+
+.tableRow:hover {
+    background-color: #ebf6ff !important;
 }
 
 
