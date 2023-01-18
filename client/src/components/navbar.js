@@ -42,7 +42,7 @@ class Navbar extends React.Component {
                         <NavLink label="Last Unsolved" />
                     </div>
                     <div style={navLinkAlignment}>
-                        <DropDown getProblemsWithDifficulty={ this.props.getProblemsWithDifficulty } />
+                        <DropDown />
                     </div>
                 </div>
             </div>

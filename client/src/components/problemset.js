@@ -1,5 +1,5 @@
 import React from 'react'
-import getProblems from './problemRetriever'
+import getProblems from '../util/problemRetriever';
 
 const problemsetStyle = {
     display: "flex",
@@ -122,6 +122,26 @@ const dataNameStyle = {
 class Problemset extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            problemsetDesc: [],
+        };
+
+        for (let i = 0; i < 50; ++i) {
+            this.state.problemsetDesc.push({
+                id: "###",
+                // name: ['A Lonely Light', 'Alice and Bob', 'Too Easy for U', 'Traveling Salesperson'][rand(0, 3)],
+                // solvedStatus: ['accepted', 'failed', 'unattempted'][rand(0, 2)]
+                probName: 'LOADING...',
+                solvedStatus: 'unattempted',
+            });
+        }
+    }
+
+    async componentDidMount() {
+        this.setState({
+            problemsetDesc: await getProblems(this.props.problemsetDifficulty, "kachhuaa")
+        });
     }
 
     getRowStyle(problemSolvedStatus, isLastRow, isPlaceholder) {
@@ -143,7 +163,7 @@ class Problemset extends React.Component {
     }
 
     getTableRows() {
-        return this.props.problemSetDesc.map((elem, idx, array) => {
+        return this.state.problemsetDesc.map((elem, idx, array) => {
             const curRowStyle = this.getRowStyle(elem.solvedStatus, idx === array.length - 1, elem.id === "###");
             
             const problemLink = "https://www.codeforces.com/problemset/problem/" + elem.id.substring(0, elem.id.length - 1) + "/" + elem.id[elem.id.length - 1];
@@ -169,7 +189,7 @@ class Problemset extends React.Component {
     }
 
     getSolvedCount() {
-        return this.props.problemSetDesc.reduce((count, problem) => problem.solvedStatus === "accepted" ? ++count : count, 0);
+        return this.state.problemsetDesc.reduce((count, problem) => problem.solvedStatus === "accepted" ? ++count : count, 0);
     }
 
     render() {
@@ -180,7 +200,7 @@ class Problemset extends React.Component {
                         Difficulty&nbsp;
                     </span>
                     <span style={ { color: "#7f0068" } }>
-                        { this.props.problemSetDifficulty }
+                        { this.props.problemsetDifficulty }
                     </span>
                     <span style={ { color: "#251b37" } }>
                         &nbsp;- Solved&nbsp;

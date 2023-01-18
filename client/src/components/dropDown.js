@@ -38,7 +38,7 @@ const dropDownContentStyle = {
     borderRadius: "0 0 0.5vh 0.5vh",
     flexFlow: "row nowrap",
     alignItems: "stretch",
-    justifyContent: "space-between",
+    justifyContent: "center",
     padding: "2vh 0",
 };
 
@@ -52,7 +52,14 @@ const difficultyInputStyle = {
 };
 
 const difficultySubmitStyle = {
+    backgroundColor: "#533e6d",
+    color: "#ffffff",
     width: "4.5vh",
+    display: "flex",
+    flex: "0 0 auto",
+    flexFlow: "column nowrap",
+    alignItems: "center",
+    justifyContent: "center",
     // height: "3vh",
     // borderStyle: "hidden",
     textAlign: "center",
@@ -71,7 +78,7 @@ class DropDown extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(evt) {
@@ -81,10 +88,10 @@ class DropDown extends React.Component {
         evt.preventDefault();
     }
 
-    handleSubmit(evt) {
-        this.props.getProblemsWithDifficulty(parseInt(this.state.difficultyValue));
-        evt.preventDefault();
-    }
+    // handleSubmit(evt) {
+    //     this.props.getProblemsOfCurrentDifficulty(parseInt(this.state.difficultyValue));
+    //     evt.preventDefault();
+    // }
 
     render() {
         return (
@@ -93,8 +100,10 @@ class DropDown extends React.Component {
                     <NavLink label="Choose Difficulty" />
                 </div>
                 <div class="dropDownContent" style={dropDownContentStyle}>
-                    <input style={difficultyInputStyle} type="text" name="difficultyValue" value={this.state.difficultyValue} onChange={this.handleChange}></input>
-                    <input style={difficultySubmitStyle} type="submit" value="✔️" onClick={this.handleSubmit}></input>
+                    <input style={difficultyInputStyle} type="text" name="difficultyValue" value={this.state.difficultyValue} onChange={this.handleChange} />
+                    <a style={difficultySubmitStyle} href={ "/problemset/" + this.state.difficultyValue } >
+                        <span class="material-symbols-outlined">subdirectory_arrow_left</span>
+                    </a>
                 </div>
             </div>
         );

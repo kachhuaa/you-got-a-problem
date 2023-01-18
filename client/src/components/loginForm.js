@@ -67,7 +67,6 @@ class LoginForm extends React.Component {
             password: "",
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(evt) {
@@ -77,19 +76,15 @@ class LoginForm extends React.Component {
         evt.preventDefault();
     }
 
-    handleSubmit(evt) {
-
-    }
-
     render() {
         return (
-            <form style={loginFormStyle}>
+            <form action="/submit-login-form" style={loginFormStyle}>
                 <div style={loginFieldStyle}>
                     <div style={loginLabelStyle}>
                         <label>Codeforces Handle:</label>
                     </div>
                     <div style={loginInputStyle}>
-                        <input style={loginTextInputStyle} type="text" name="handle" value={this.state.handle} onChange={this.handleChange}></input>
+                        <input style={loginTextInputStyle} type="text" name="handle" value={this.state.handle} onChange={this.handleChange} />
                     </div>
                 </div>
                 <div style={loginFieldStyle}>
@@ -97,11 +92,11 @@ class LoginForm extends React.Component {
                         <label>Password:</label>
                     </div>
                     <div style={loginInputStyle}>
-                        <input style={loginTextInputStyle} type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                        <input style={loginTextInputStyle} type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </div>
                 </div>
                 <div style={loginFieldStyle}>
-                    <input style={loginButtonStyle} type="submit" value="Login" onClick={this.handleSubmit}></input>
+                    <input style={loginButtonStyle} type="submit" value="Login" />
                 </div>
                 <div style={loginFooterStyle}>
                     <label style={ { cursor: "pointer" } }>I forgot my password :(</label>

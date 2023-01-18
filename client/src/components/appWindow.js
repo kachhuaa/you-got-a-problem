@@ -2,7 +2,6 @@ import Navbar from './navbar'
 import Content from './content'
 import '../styles/main.css'
 import React from 'react';
-import getProblems from './problemRetriever'
 
 const appWindowStyle = {
     backgroundColor: "#ffecef",
@@ -47,52 +46,57 @@ class AppWindow extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            problemSetDesc: [],
-            problemSetDifficulty: 1300,
-        };
+        // this.state = {
+        //     problemSetDesc: [],
+        //     problemSetDifficulty: 1300,
+        //     curPage: "home",
+        // };
 
-        for (let i = 0; i < 50; ++i) {
-            this.loadingProblems.push({
-                id: "###",
-                // name: ['A Lonely Light', 'Alice and Bob', 'Too Easy for U', 'Traveling Salesperson'][rand(0, 3)],
-                // solvedStatus: ['accepted', 'failed', 'unattempted'][rand(0, 2)]
-                probName: 'LOADING...',
-                solvedStatus: 'unattempted',
-            });
-        }
+        // for (let i = 0; i < 50; ++i) {
+        //     this.loadingProblems.push({
+        //         id: "###",
+        //         // name: ['A Lonely Light', 'Alice and Bob', 'Too Easy for U', 'Traveling Salesperson'][rand(0, 3)],
+        //         // solvedStatus: ['accepted', 'failed', 'unattempted'][rand(0, 2)]
+        //         probName: 'LOADING...',
+        //         solvedStatus: 'unattempted',
+        //     });
+        // }
 
-        this.state.problemSetDesc = this.loadingProblems;
+        // this.state.problemSetDesc = this.loadingProblems;
     }
 
-    loadingProblems = []
+    // loadingProblems = []
 
-    async componentDidMount() {
-        await this.getProblemsWithDifficulty(1300);
-    }
-
-    getProblemsWithDifficulty = async (difficultyValue) => {
-        this.setState({
-            problemSetDesc: this.loadingProblems,
-            problemSetDifficulty: difficultyValue,
-        });
-
-        this.setState({ 
-            problemSetDesc: await getProblems(difficultyValue, "kachhuaa"),
-            problemSetDifficulty: difficultyValue,
-        });
-    }
+    // async componentDidMount() {
+    //     curPage = (await axios.get('/get-current-page')).data.curPage;
+    //     await this.getProblemsOfCurrentDifficulty();
+    // }
+    
+    // getProblemsOfCurrentDifficulty = async () => {
+    //     const curPage = (await axios.get('/get-current-page')).data.curPage;
+    //     const difficulty = parseInt(curPage.substring(10));
+        
+    //     this.setState({
+    //         problemSetDesc: this.loadingProblems,
+    //         problemSetDifficulty: difficulty,
+    //     });
+        
+    //     this.setState({ 
+    //         problemSetDesc: await getProblems(difficulty, "kachhuaa"),
+    //         problemSetDifficulty: difficulty,
+    //     });
+    // }
 
     render() {
         return (
             <div style={appWindowStyle}>
                 {/* <h1>AppWindow.render() called!</h1> */}
                 <div style={navbarAlignment}>
-                    <Navbar getProblemsWithDifficulty={ this.getProblemsWithDifficulty }/>
+                    <Navbar />
                 </div>
                 <div style={dummyNavbarAlignment} />
                 <div style={contentAlignment}>
-                    <Content problemSetDifficulty={ this.state.problemSetDifficulty } problemSetDesc={ this.state.problemSetDesc }/>
+                    <Content />
                 </div>
             </div>
         );

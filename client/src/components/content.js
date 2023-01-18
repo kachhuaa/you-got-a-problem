@@ -1,6 +1,9 @@
 import ComputerScreen from './computerScreen'
 import Title from './title'
 import Problemset from './problemset'
+import React from 'react';
+import axios from 'axios';
+import Emoji from './emoji';
 
 // import MediaQuery from 'react-responsive'
 
@@ -22,37 +25,68 @@ const titleAlignment = {
     marginTop: "13.5vh",
 };
 
-function Content(props) {
-    const contentStyleMobile = structuredClone(contentStyle);
-    contentStyleMobile.flexFlow = "column nowrap";
+class Content extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            curPage: "home",
+            curDifficulty: 1300,
+        };
+    }
 
-    // return (
-    //     <div style={ { display: "flex", flex: "1 1 auto", flexFlow: "column nowrap", justifyContent: "space-between", alignItems: "center" } }>
-    //         <Title type="big" textAlign="center" fontSize="11.5vh" lineHeight="17vh" />
-    //         <Emoji fontSize="30vh" />
-    //     </div>
-    // );
 
-    return (
-        <div style={contentStyle}>
-            <div style={ titleAlignment }>
-                <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
-            </div>
-            {/* <ComputerScreen /> */}
-            <Problemset problemSetDifficulty={ props.problemSetDifficulty } problemSetDesc={ props.problemSetDesc }/>
-        </div>
-    );
-    // return (
-    //         <MediaQuery minWidth={500}>
-    //             <div style={contentStyle}>
-    //                 <div style={ { flexFlow: "column nowrap", justifyContent: "space-between", alignItems: "center" } }>
-    //                     <Title fontSize="11.5vh" lineHeight="15vh"/>
-    //                     <Emoji fontSize="30vh" />
-    //                 </div>
-    //                 <StatWindow />
-    //             </div>
-    //         </MediaQuery>
-    // );
+    async componentDidMount() {
+        const newState = (await axios.get('/get-current-page')).data;
+        this.setState(newState);
+    }
+
+    render() {
+        const contentStyleMobile = structuredClone(contentStyle);
+        contentStyleMobile.flexFlow = "column nowrap";
+
+        if (this.state.curPage === "home") {
+            return (
+                <div style={ { marginTop: "4vh", display: "flex", flex: "1 1 auto", flexFlow: "column nowrap", justifyContent: "space-between", alignItems: "center" } }>
+                    <Title type="big" textAlign="center" fontSize="11.5vh" lineHeight="17vh" />
+                    <Emoji fontSize="30vh" />
+                </div>
+            );
+        }
+
+        if (this.state.curPage === "login") {
+            return (
+                <div style={contentStyle}>
+                    <div style={ titleAlignment }>
+                        <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
+                    </div>
+                    <ComputerScreen />
+                </div>
+            );
+        }
+
+        if (this.state.curPage.startsWith("difficulty")) {
+            return (
+                <div style={contentStyle}>
+                    <div style={ titleAlignment }>
+                        <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
+                    </div>
+                    <Problemset problemsetDifficulty={ this.state.curDifficulty }/>
+                </div>
+            );
+        }
+
+        // return (
+        //         <MediaQuery minWidth={500}>
+        //             <div style={contentStyle}>
+        //                 <div style={ { flexFlow: "column nowrap", justifyContent: "space-between", alignItems: "center" } }>
+        //                     <Title fontSize="11.5vh" lineHeight="15vh"/>
+        //                     <Emoji fontSize="30vh" />
+        //                 </div>
+        //                 <StatWindow />
+        //             </div>
+        //         </MediaQuery>
+        // );
+    }
 }
 
 export default Content;
