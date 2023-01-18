@@ -30,13 +30,19 @@ class Content extends React.Component {
         super(props);
         this.state = {
             curPage: "home",
+            userHandle: "UNKNOWN_USER",
             curDifficulty: 1300,
         };
     }
 
 
     async componentDidMount() {
-        const newState = (await axios.get('/get-current-page')).data;
+        const currentData = (await axios.get('/get-current-page')).data;
+        const newState = {
+            curPage: currentData.curPage,
+            userHandle: currentData.userHandle,
+            curDifficulty: currentData.curDifficulty,
+        };
         this.setState(newState);
     }
 
@@ -70,7 +76,7 @@ class Content extends React.Component {
                     <div style={ titleAlignment }>
                         <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
                     </div>
-                    <Problemset problemsetDifficulty={ this.state.curDifficulty }/>
+                    <Problemset userHandle={ this.state.userHandle } problemsetDifficulty={ this.state.curDifficulty }/>
                 </div>
             );
         }

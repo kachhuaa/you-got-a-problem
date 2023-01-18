@@ -99,7 +99,7 @@ class LoginForm extends React.Component {
                     <input style={loginButtonStyle} type="submit" value="Login" />
                 </div>
                 <div style={loginFooterStyle}>
-                    <label style={ { cursor: "pointer" } }>I forgot my password :(</label>
+                    {/* <label style={ { cursor: "pointer", color: "#7f0068" } }>I forgot my password :(</label> */}
                 </div>
             </form>
         );

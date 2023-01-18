@@ -1,3 +1,5 @@
+const db = require('./dbInterface');
+
 const wait = function(totalWaitTime, timeElapsed = 0) {
     if (timeElapsed < totalWaitTime) {
         return;
@@ -20,10 +22,25 @@ function shuffleArray(array) {
     }
 }
 
-async function getProblems(problemRating, userHandle) {
-    const problems = (await (await fetch("https://codeforces.com/api/problemset.problems")).json()).result.problems.filter(problem => problem.rating == problemRating);
-    
-    wait(3);
+async function getProblems(userHandle, problemsetDifficulty) {
+    let problems = (await db.getProblemset(userHandle, problemsetDifficulty));
+    // console.log(problems);
+
+    if (problems === "PROBLEMSET_NOT_FOUND") {
+        await generateProblemset(userHandle, problemsetDifficulty);
+        problems = (await db.getProblemset(userHandle, problemsetDifficulty));
+    }
+
+    // if (problems === "PROBLEMSET_NOT_FOUND") {
+    //     problems = (await (await fetch("https://codeforces.com/api/problemset.problems")).json()).result.problems.filter(problem => problem.rating == problemsetDifficulty);
+    //     problems = problems.map((problem) => { 
+    //         return {
+    //             problemId: problem.contestId.toString() + problem.index,
+    //             problemName: problem.probName,
+    //         };
+    //     })
+    //     wait(3);
+    // }
 
     const userSubmissions = (await (await fetch("https://codeforces.com/api/user.status?handle=" + userHandle)).json()).result;
     const solvedProblems = new Set();
@@ -38,8 +55,8 @@ async function getProblems(problemRating, userHandle) {
 
     const processedProblems = problems.map((problem) => {
         const processed = {
-            id: problem.contestId.toString() + problem.index,
-            probName: problem.name,
+            id: problem.problemId,
+            probName: problem.problemName,
             solvedStatus: "unattempted",
         };
 
@@ -49,9 +66,41 @@ async function getProblems(problemRating, userHandle) {
             processed.solvedStatus = "failed";
         return processed;
     });
-    shuffleArray(processedProblems);
+    // shuffleArray(processedProblems);
 
-    return processedProblems.slice(0, 100);
+    return processedProblems.slice(0, Math.min(100, processedProblems.length));
 }
 
-export default getProblems;
+async function generateProblemset(userHandle, problemsetDifficulty) {
+    const problems = (await (await fetch("https://codeforces.com/api/problemset.problems")).json()).result.problems.filter(problem => problem.rating == problemsetDifficulty);
+
+    wait(2);
+
+    const userSubmissions = (await (await fetch("https://codeforces.com/api/user.status?handle=" + userHandle)).json()).result;
+
+    const solvedProblems = new Set();
+    for (const submission of userSubmissions) {
+        const problemId = submission.problem.contestId.toString() + submission.problem.index;
+        if (submission.verdict === "OK")
+            solvedProblems.add(problemId);
+    }
+
+    const processedProblems = problems
+        .map((problem) => {
+            return {
+                problemId: problem.contestId.toString() + problem.index,
+                problemName: problem.name,
+            };
+        })
+        .filter((problem) => {
+            return !solvedProblems.has(problem.problemId);
+        });
+
+    shuffleArray(processedProblems);
+
+    const slicedProblems = processedProblems.slice(0, Math.min(100, processedProblems.length));
+
+    await db.addProblemset(userHandle, problemsetDifficulty, slicedProblems);
+}
+
+module.exports = { getProblems, generateProblemset };

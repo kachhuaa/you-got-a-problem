@@ -1,5 +1,5 @@
 import React from 'react'
-import getProblems from '../util/problemRetriever';
+import axios from 'axios'
 
 const problemsetStyle = {
     display: "flex",
@@ -29,7 +29,7 @@ const contentAlignment = {
     flexFlow: "column nowrap",
     justifyContent: "flex-start",
     alignItems: "stretch",
-    overflowY: "auto",
+    overflowY: "scroll",
     height: "72vh",
 };
 
@@ -139,8 +139,10 @@ class Problemset extends React.Component {
     }
 
     async componentDidMount() {
+        const problemsetDesc = (await axios.get('/get-problemset/' + this.props.userHandle + '/' + this.props.problemsetDifficulty.toString())).data;
         this.setState({
-            problemsetDesc: await getProblems(this.props.problemsetDifficulty, "kachhuaa")
+            // problemsetDesc: await getProblems(this.props.problemsetDifficulty, "kachhuaa")
+            problemsetDesc: problemsetDesc
         });
     }
 

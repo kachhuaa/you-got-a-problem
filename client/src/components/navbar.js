@@ -38,9 +38,9 @@ class Navbar extends React.Component {
                     <div style={navLinkAlignment}>
                         <NavLink label="Saved Problems" />
                     </div>
-                    <div style={navLinkAlignment}>
+                    {/* <div style={navLinkAlignment}>
                         <NavLink label="Last Unsolved" />
-                    </div>
+                    </div> */}
                     <div style={navLinkAlignment}>
                         <DropDown />
                     </div>
