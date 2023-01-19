@@ -17,9 +17,17 @@ function NavLink(props) {
         navLinkStyle.width = props.width;
     }
 
+    if (props.href) {
+        return (
+            <a class="navLink" href={ props.href } style= { navLinkStyle }>
+                { props.label }
+            </a>
+        );
+    }
+
     return (
-        <div class="navLink" style={navLinkStyle}>
-            {props.label}
+        <div class="navLink" style={ navLinkStyle }>
+            { props.label }
         </div>
     );
 }

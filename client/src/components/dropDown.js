@@ -97,7 +97,7 @@ class DropDown extends React.Component {
         return (
             <div class="dropDown" style={dropDownStyle}>
                 <div class="dropDownLink" style={dropDownLinkStyle}>
-                    <NavLink label="Choose Difficulty" />
+                    <NavLink label="Choose Difficulty" href="" />
                 </div>
                 <div class="dropDownContent" style={dropDownContentStyle}>
                     <input style={difficultyInputStyle} type="text" name="difficultyValue" value={this.state.difficultyValue} onChange={this.handleChange} />

@@ -22,25 +22,21 @@ function shuffleArray(array) {
     }
 }
 
-async function getProblems(userHandle, problemsetDifficulty) {
-    let problems = (await db.getProblemset(userHandle, problemsetDifficulty));
-    // console.log(problems);
+async function getProblems(userHandle, savedProblemsetRequested, problemsetDifficulty) {
+    let problems;
 
-    if (problems === "PROBLEMSET_NOT_FOUND") {
-        await generateProblemset(userHandle, problemsetDifficulty);
-        problems = (await db.getProblemset(userHandle, problemsetDifficulty));
+    if (savedProblemsetRequested) {
+        problems = (await db.getSavedProblemset(userHandle));
     }
+    else {
+        problems = (await db.getProblemset(userHandle, problemsetDifficulty));
+        // console.log(problems);
 
-    // if (problems === "PROBLEMSET_NOT_FOUND") {
-    //     problems = (await (await fetch("https://codeforces.com/api/problemset.problems")).json()).result.problems.filter(problem => problem.rating == problemsetDifficulty);
-    //     problems = problems.map((problem) => { 
-    //         return {
-    //             problemId: problem.contestId.toString() + problem.index,
-    //             problemName: problem.probName,
-    //         };
-    //     })
-    //     wait(3);
-    // }
+        if (problems === "PROBLEMSET_NOT_FOUND") {
+            await generateProblemset(userHandle, problemsetDifficulty);
+            problems = (await db.getProblemset(userHandle, problemsetDifficulty));
+        }
+    }
 
     const userSubmissions = (await (await fetch("https://codeforces.com/api/user.status?handle=" + userHandle)).json()).result;
     const solvedProblems = new Set();
@@ -58,6 +54,8 @@ async function getProblems(userHandle, problemsetDifficulty) {
             id: problem.problemId,
             probName: problem.problemName,
             solvedStatus: "unattempted",
+            saved: problem.problemSaved,
+            difficulty: problem.problemDifficulty,
         };
 
         if (solvedProblems.has(processed.id))
@@ -73,10 +71,10 @@ async function getProblems(userHandle, problemsetDifficulty) {
 
 async function generateProblemset(userHandle, problemsetDifficulty) {
     const problems = (await (await fetch("https://codeforces.com/api/problemset.problems")).json()).result.problems.filter(problem => problem.rating == problemsetDifficulty);
-
     wait(2);
 
     const userSubmissions = (await (await fetch("https://codeforces.com/api/user.status?handle=" + userHandle)).json()).result;
+    wait(2);
 
     const solvedProblems = new Set();
     for (const submission of userSubmissions) {
@@ -90,6 +88,7 @@ async function generateProblemset(userHandle, problemsetDifficulty) {
             return {
                 problemId: problem.contestId.toString() + problem.index,
                 problemName: problem.name,
+                problemSaved: false,
             };
         })
         .filter((problem) => {

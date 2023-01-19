@@ -36,7 +36,7 @@ class Navbar extends React.Component {
                 </div>
                 <div style={ { display: "flex", marginRight: "7.5vh", flexFlow: "row nowrap", justifyContent: "flex-end", alignItems: "stretch", /*flex: "1 1 auto"*/ } }>
                     <div style={navLinkAlignment}>
-                        <NavLink label="Saved Problems" />
+                        <NavLink label="Saved Problems" href="/problemset/saved" />
                     </div>
                     {/* <div style={navLinkAlignment}>
                         <NavLink label="Last Unsolved" />

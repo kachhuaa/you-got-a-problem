@@ -32,16 +32,18 @@ class Content extends React.Component {
             curPage: "home",
             userHandle: "UNKNOWN_USER",
             curDifficulty: 1300,
+            lastPageRequest: "home",
         };
     }
 
 
     async componentDidMount() {
-        const currentData = (await axios.get('/get-current-page')).data;
+        const currentData = (await axios.get('/get-current-session')).data;
         const newState = {
             curPage: currentData.curPage,
             userHandle: currentData.userHandle,
             curDifficulty: currentData.curDifficulty,
+            lastPageRequest: currentData.lastPageRequest,
         };
         this.setState(newState);
     }
@@ -70,13 +72,13 @@ class Content extends React.Component {
             );
         }
 
-        if (this.state.curPage.startsWith("difficulty")) {
+        if (this.state.curPage.startsWith("difficulty") || this.state.curPage === "saved") {
             return (
                 <div style={contentStyle}>
                     <div style={ titleAlignment }>
                         <Title type="small" textAlign="left" fontSize="11.5vh" lineHeight="17vh" />
                     </div>
-                    <Problemset userHandle={ this.state.userHandle } problemsetDifficulty={ this.state.curDifficulty }/>
+                    <Problemset userHandle={ this.state.userHandle } curPage={ this.state.curPage } problemsetDifficulty={ this.state.curDifficulty }/>
                 </div>
             );
         }
